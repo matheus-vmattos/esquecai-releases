@@ -1,8 +1,8 @@
-version: 0.4.0
+version: 0.4.1
 files:
-  - url: esquecai-0.4.0-setup.exe
-    sha512: 99GXINA/9s1lVyj1leVwiAdlmg+J1lE4+EGiORpddeeZjaGCRUKCE9BfIV53BwPDf4YHlgdsKqdGYZO2iKICLg==
-    size: 96852883
-path: esquecai-0.4.0-setup.exe
-sha512: 99GXINA/9s1lVyj1leVwiAdlmg+J1lE4+EGiORpddeeZjaGCRUKCE9BfIV53BwPDf4YHlgdsKqdGYZO2iKICLg==
-releaseDate: '2026-08-13T20:34:36.530Z'
+  - url: esquecai-0.4.1-setup.exe
+    sha512: akxO9XnpkhxY1WPo76NKf9NxFv98s/AzOiUUOLTlsHt2iQskfqxhaWuifzBSkPVby72JOqr2ZeJo9iOe6Xa8jA==
+    size: 96853180
+path: esquecai-0.4.1-setup.exe
+sha512: akxO9XnpkhxY1WPo76NKf9NxFv98s/AzOiUUOLTlsHt2iQskfqxhaWuifzBSkPVby72JOqr2ZeJo9iOe6Xa8jA==
+releaseDate: '2026-08-13T20:51:52.356Z'
