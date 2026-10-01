@@ -1,0 +1,62 @@
+name: Publish EsquecAI 0.99.18
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publish-0.99.18.yml']
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ARTIFACT_URL: 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-6284-820e-9003-9a3d5fb3c63c/raw?se=2026-10-01T17%3A17%3A14Z&sp=r&sv=2026-02-06&sr=b&scid=aa36c51a-ab2c-4451-8dd2-21f435a5634d&skoid=ba7c401a-35d6-40a0-a0f3-2259cc50bbe2&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-10-01T16%3A46%3A45Z&ske=2026-10-02T16%3A46%3A45Z&sks=b&skv=2026-02-06&sig=T41YJmgkn5mSLDahbRCpC8dGV3ROK4Pj9lbomofK5uA%3D'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download validated Windows artifact
+        run: |
+          curl --fail --location --retry 4 --retry-delay 2 "$ARTIFACT_URL" --output package.zip
+          echo '81385d53572125987094a52c27df25c8616c09e008609e6b0ac0f4bbb044d576  package.zip' | sha256sum --check
+          mkdir package
+          unzip -q package.zip -d package
+          test -s package/esquecai-0.99.18-setup.exe
+          test -s package/esquecai-0.99.18-setup.exe.blockmap
+          test -s package/latest.yml
+          test -s package/windows-validation.json
+      - name: Prepare absolute update feed
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('package/latest.yml')
+          s = p.read_text()
+          filename = 'esquecai-0.99.18-setup.exe'
+          assert s.count(filename) >= 2, 'Unexpected update manifest'
+          url = 'https://github.com/matheus-vmattos/esquecai-releases/releases/download/v0.99.18/' + filename
+          p.write_text(s.replace(filename, url))
+          assert 'version: 0.99.18' in p.read_text()
+          PY
+      - name: Create public release
+        run: |
+          if gh release view v0.99.18 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo 'Release already exists; refusing to overwrite assets' >&2
+            exit 1
+          fi
+          gh release create v0.99.18 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title 'EsquecAI 0.99.18' --notes 'Interface escura refinada, menus com brilho cromático discreto e relatórios mais rápidos. Instalador validado no Windows, inclusive atualização automática a partir da 0.99.16. Código-fonte: matheus-vmattos/esquecAI@3abe0fd4ef65ef2c573811974e1f4579500411fd.'
+          gh release upload v0.99.18 package/esquecai-0.99.18-setup.exe package/esquecai-0.99.18-setup.exe.blockmap package/latest.yml package/windows-validation.json --repo "$GITHUB_REPOSITORY"
+          gh release edit v0.99.18 --repo "$GITHUB_REPOSITORY" --draft=false
+      - name: Verify public files before promoting feed
+        run: |
+          base="https://github.com/$GITHUB_REPOSITORY/releases/download/v0.99.18"
+          for file in esquecai-0.99.18-setup.exe esquecai-0.99.18-setup.exe.blockmap latest.yml; do
+            curl --fail --location --retry 8 --retry-delay 3 --retry-all-errors "$base/$file" --output "public-$file"
+            test "$(sha256sum "public-$file" | cut -d' ' -f1)" = "$(sha256sum "package/$file" | cut -d' ' -f1)"
+          done
+      - name: Promote verified update feed
+        run: |
+          cp package/latest.yml latest.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add latest.yml
+          git commit -m 'Promote EsquecAI 0.99.18 update feed'
+          git push origin HEAD:main
