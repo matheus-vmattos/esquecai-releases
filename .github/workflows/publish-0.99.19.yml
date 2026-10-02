@@ -16,18 +16,38 @@ jobs:
       SOURCE_SHA: 'dbd6f19a4961a498d2d3c3ac2b93eb864d98fafe'
       ARTIFACT_ID: '11227620648'
       ARTIFACT_SHA256: '0703469c7bc2cf5b5b9c745c3ef678fe9d903de2c982f80c42f64823b5e972ae'
+      TAR_SHA256: '04cce065ca4e88f30eafaed650bdfde49feb614acdba17f23bc32f1ae572e4e9'
     steps:
       - uses: actions/checkout@v4
-      - name: Download validated Windows artifact
+      - name: Reassemble validated Windows package
         run: |
-          gh api "repos/$SOURCE_REPO/actions/artifacts/$ARTIFACT_ID/zip" > package.zip
-          echo "$ARTIFACT_SHA256  package.zip" | sha256sum --check
+          # o token deste repositório não lê artefatos do esquecAI: o pacote
+          # validado (artefato $ARTIFACT_ID, zip sha256 $ARTIFACT_SHA256) veio
+          # num ramo temporário, em pedaços, e é conferido aqui
+          git fetch --depth 1 origin transfer-0.99.19
           mkdir package
-          unzip -q package.zip -d package
+          git archive FETCH_HEAD | tar -x -C package
+          cat package/pacote.tar.part-* > pacote.tar
+          echo "$TAR_SHA256  pacote.tar" | sha256sum --check
+          tar -xf pacote.tar -C package
           test -s "package/esquecai-$VERSION-setup.exe"
           test -s "package/esquecai-$VERSION-setup.exe.blockmap"
           test -s package/latest.yml
           test -s package/windows-validation.json
+          python3 - <<'PY'
+          import base64, hashlib, json, os
+          v = os.environ['VERSION']
+          val = json.load(open('package/windows-validation.json'))
+          assert val['version'] == v
+          assert val['sourceCommit'] == os.environ['SOURCE_SHA']
+          for c in ['real-auto-update', 'synthetic-data-preserved', 'installed-version']:
+              assert c in val['checks'], c
+          b = open(f'package/esquecai-{v}-setup.exe', 'rb').read()
+          assert len(b) == val['installerSize']
+          assert hashlib.sha256(b).hexdigest() == val['installerSha256']
+          assert base64.b64encode(hashlib.sha512(b).digest()).decode() == val['installerSha512']
+          print('pacote confere com a validação do Windows')
+          PY
       - name: Prepare absolute update feed
         run: |
           python3 - <<'PY'
@@ -70,3 +90,6 @@ jobs:
           git add latest.yml
           git commit -m "Promote EsquecAI $VERSION update feed"
           git push origin HEAD:main
+      - name: Remove temporary transfer branch
+        if: always()
+        run: git push origin --delete transfer-0.99.19 || true
