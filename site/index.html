@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EsquecAI Beta</title>
+<meta name="description" content="Baixe a versão beta do EsquecAI para Windows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Mesma identidade do app: Barlow, fundo escuro com grade fina, um acento ciano */
+:root{
+  --chao:#05080C; --painel:#0B1117; --cartao:#0F1820; --linha:#1E2C37;
+  --tinta:#E3ECF2; --suave:#9AAEBB; --fraco:#6B7E8B;
+  --marca:#4FD3EA; --marca-fundo:#0E2A33; --aviso:#F2B54A;
+  --sans:"Barlow","Segoe UI",system-ui,sans-serif; --display:"Barlow Condensed","Barlow","Segoe UI",sans-serif; --mono:"JetBrains Mono","Cascadia Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--chao);color:var(--tinta);font:17px/1.6 var(--sans);
+  background-image:linear-gradient(rgba(79,211,234,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(79,211,234,.045) 1px,transparent 1px);background-size:36px 36px}
+a{color:var(--marca)}
+main{max-width:860px;margin:0 auto;padding:40px 16px 72px;display:flex;flex-direction:column;gap:64px}
+.marca{font:700 1.15rem/1 var(--display);letter-spacing:.14em}
+.marca span{color:var(--marca)}
+.rotulo{font:500 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--marca)}
+h1,h2{font-family:var(--display);margin:0;line-height:1.05;letter-spacing:.02em;text-wrap:balance}
+h1{font-size:clamp(2.4rem,7vw,3.6rem)} h2{font-size:1.7rem}
+p{margin:0;max-width:62ch}
+.sub{color:var(--suave);font-size:1.08rem}
+
+.topo{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.selo-beta{font:500 .7rem/1 var(--mono);letter-spacing:.12em;border:1px solid var(--marca);color:var(--marca);padding:6px 9px;border-radius:5px}
+
+.heroi{display:flex;flex-direction:column;gap:18px}
+.baixar{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;margin-top:6px}
+.botao{display:inline-flex;align-items:center;gap:10px;background:var(--marca);color:#04161B;text-decoration:none;font:700 1.05rem/1 var(--sans);padding:16px 22px;border-radius:9px;box-shadow:0 0 0 1px var(--marca),0 10px 30px rgba(79,211,234,.18)}
+.botao:hover{filter:brightness(1.08)}
+.botao:focus-visible{outline:3px solid var(--tinta);outline-offset:3px}
+.botao svg{width:20px;height:20px}
+.ficha{font:500 .78rem/1.5 var(--mono);color:var(--fraco)}
+.ficha b{color:var(--suave);font-weight:500}
+
+.passos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;counter-reset:p}
+.passo{display:grid;grid-template-columns:44px 1fr;gap:16px;background:var(--painel);border:1px solid var(--linha);border-radius:12px;padding:18px}
+.passo::before{counter-increment:p;content:counter(p);width:36px;height:36px;border-radius:8px;background:var(--marca-fundo);color:var(--marca);display:grid;place-items:center;font:700 1.1rem var(--display)}
+.passo h3{margin:0 0 4px;font:600 1.08rem var(--sans)}
+.passo p{color:var(--suave);font-size:.98rem}
+.passo .conteudo{display:flex;flex-direction:column;gap:10px;min-width:0}
+
+/* ilustração do aviso do Windows: só a forma, para a pessoa reconhecer */
+.janelinha{background:#0F4C8A;color:#fff;border-radius:6px;padding:16px 18px;max-width:420px;font:400 .86rem/1.45 "Segoe UI",var(--sans);display:flex;flex-direction:column;gap:8px}
+.janelinha strong{font-size:1.15rem;font-weight:600}
+.janelinha .link{text-decoration:underline;font-weight:600}
+.janelinha .linha-botoes{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.janelinha .b{border:1px solid rgba(255,255,255,.7);padding:5px 12px;border-radius:3px;font-size:.8rem}
+.janelinha .b.alvo{background:#fff;color:#0F4C8A;font-weight:600;box-shadow:0 0 0 3px var(--aviso)}
+.janelinha .marcado{outline:3px solid var(--aviso);outline-offset:2px;border-radius:2px}
+.legenda{font:500 .72rem/1.4 var(--mono);color:var(--fraco)}
+
+.grade2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cartao{background:var(--painel);border:1px solid var(--linha);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.cartao h3{margin:0;font:600 1.02rem var(--sans)}
+.cartao p{color:var(--suave);font-size:.95rem}
+footer{border-top:1px solid var(--linha);padding-top:18px;color:var(--fraco);font-size:.85rem;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:640px){.grade2{grid-template-columns:1fr} .passo{grid-template-columns:1fr} main{gap:48px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <div class="topo">
+    <span class="marca">ESQUEC<span>AI</span></span>
+    <span class="selo-beta">BETA</span>
+  </div>
+
+  <section class="heroi">
+    <span class="rotulo">Para quem foi convidado a testar</span>
+    <h1>Seu dia de trabalho, sem esquecer nada.</h1>
+    <p class="sub">Tarefas do dia, contas a pagar, PDFs, calculadora e a sua equipe, tudo num só aplicativo para Windows. Você está recebendo uma versão de teste: ela já funciona, e o que você contar sobre ela entra nas próximas versões.</p>
+    <div class="baixar">
+      <a class="botao" id="baixar" href="https://github.com/matheus-vmattos/esquecai-releases/releases/latest/download/EsquecAI-Setup.exe">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Baixar para Windows
+      </a>
+      <span class="ficha"><b>Versão mais recente</b> · cerca de 130 MB<br>Windows 10 ou 11, 64 bits</span>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:18px">
+    <span class="rotulo">Instalar</span>
+    <h2>Três passos, uns dois minutos</h2>
+    <ol class="passos">
+      <li class="passo"><div class="conteudo">
+        <h3>Baixe e abra o arquivo</h3>
+        <p>Clique em "Baixar para Windows" e, quando terminar, abra o arquivo "EsquecAI-Setup" na barra do navegador ou na pasta Downloads. Se o navegador perguntar se quer manter o arquivo, escolha <strong>Manter</strong>.</p>
+      </div></li>
+      <li class="passo"><div class="conteudo">
+        <h3>Se o Windows mostrar uma tela azul, é esperado</h3>
+        <p>Por ser um programa novo, ainda em teste, o Windows pode mostrar "O Windows protegeu o computador". Clique em <strong>Mais informações</strong> e depois em <strong>Executar assim mesmo</strong>.</p>
+        <div class="janelinha" role="img" aria-label="Ilustração do aviso do Windows: clique em Mais informações e depois em Executar assim mesmo">
+          <strong>O Windows protegeu o computador</strong>
+          <span>O Microsoft Defender SmartScreen impediu a inicialização de um aplicativo não reconhecido…</span>
+          <span class="link marcado">Mais informações</span>
+          <div class="linha-botoes"><span class="b alvo">Executar assim mesmo</span><span class="b">Não executar</span></div>
+        </div>
+        <span class="legenda">Ilustração. Na tela real, o botão "Executar assim mesmo" só aparece depois que você clica em "Mais informações".</span>
+      </div></li>
+      <li class="passo"><div class="conteudo">
+        <h3>Crie a sua conta</h3>
+        <p>O EsquecAI abre sozinho no fim da instalação e cria um atalho na área de trabalho. Entre com o seu e-mail e uma senha. Se alguém te convidou para uma equipe, entre com o ID e a senha da equipe que essa pessoa te mandou.</p>
+      </div></li>
+    </ol>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:18px">
+    <span class="rotulo">Durante o teste</span>
+    <h2>O que você precisa saber</h2>
+    <div class="grade2">
+      <div class="cartao"><h3>Atualiza sozinho</h3><p>Quando sai uma versão nova, o app avisa e se atualiza. Não precisa voltar aqui para baixar de novo.</p></div>
+      <div class="cartao"><h3>Achou um problema?</h3><p>Conte para quem te convidou: o que você fez, o que esperava e, se der, um print da tela.</p></div>
+      <div class="cartao"><h3>Seus dados</h3><p>O app guarda o seu e-mail, as suas tarefas e os arquivos que você anexa, para sincronizar entre computadores e com a sua equipe. Nada disso é vendido nem usado para propaganda.</p></div>
+      <div class="cartao"><h3>É um teste</h3><p>Algumas telas ainda mudam de uma versão para outra. Para documentos importantes, guarde também uma cópia no seu computador.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>EsquecAI · versão de teste para convidados</span>
+    <a href="politica-de-privacidade.html">Política de privacidade</a>
+  </footer>
+</main>
+</body>
+</html>

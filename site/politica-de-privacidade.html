@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacidade do EsquecAI</title>
+<meta name="description" content="O que o EsquecAI guarda, onde e para quê.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Mesma identidade do app: Barlow, fundo escuro com grade fina, um acento ciano */
+:root{
+  --chao:#05080C; --painel:#0B1117; --cartao:#0F1820; --linha:#1E2C37;
+  --tinta:#E3ECF2; --suave:#9AAEBB; --fraco:#6B7E8B;
+  --marca:#4FD3EA; --marca-fundo:#0E2A33; --aviso:#F2B54A;
+  --sans:"Barlow","Segoe UI",system-ui,sans-serif; --display:"Barlow Condensed","Barlow","Segoe UI",sans-serif; --mono:"JetBrains Mono","Cascadia Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--chao);color:var(--tinta);font:17px/1.6 var(--sans);
+  background-image:linear-gradient(rgba(79,211,234,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(79,211,234,.045) 1px,transparent 1px);background-size:36px 36px}
+a{color:var(--marca)}
+main{max-width:860px;margin:0 auto;padding:40px 16px 72px;display:flex;flex-direction:column;gap:64px}
+.marca{font:700 1.15rem/1 var(--display);letter-spacing:.14em}
+.marca span{color:var(--marca)}
+.rotulo{font:500 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--marca)}
+h1,h2{font-family:var(--display);margin:0;line-height:1.05;letter-spacing:.02em;text-wrap:balance}
+h1{font-size:clamp(2.4rem,7vw,3.6rem)} h2{font-size:1.7rem}
+p{margin:0;max-width:62ch}
+.sub{color:var(--suave);font-size:1.08rem}
+
+.topo{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.selo-beta{font:500 .7rem/1 var(--mono);letter-spacing:.12em;border:1px solid var(--marca);color:var(--marca);padding:6px 9px;border-radius:5px}
+
+.heroi{display:flex;flex-direction:column;gap:18px}
+.baixar{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;margin-top:6px}
+.botao{display:inline-flex;align-items:center;gap:10px;background:var(--marca);color:#04161B;text-decoration:none;font:700 1.05rem/1 var(--sans);padding:16px 22px;border-radius:9px;box-shadow:0 0 0 1px var(--marca),0 10px 30px rgba(79,211,234,.18)}
+.botao:hover{filter:brightness(1.08)}
+.botao:focus-visible{outline:3px solid var(--tinta);outline-offset:3px}
+.botao svg{width:20px;height:20px}
+.ficha{font:500 .78rem/1.5 var(--mono);color:var(--fraco)}
+.ficha b{color:var(--suave);font-weight:500}
+
+.passos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;counter-reset:p}
+.passo{display:grid;grid-template-columns:44px 1fr;gap:16px;background:var(--painel);border:1px solid var(--linha);border-radius:12px;padding:18px}
+.passo::before{counter-increment:p;content:counter(p);width:36px;height:36px;border-radius:8px;background:var(--marca-fundo);color:var(--marca);display:grid;place-items:center;font:700 1.1rem var(--display)}
+.passo h3{margin:0 0 4px;font:600 1.08rem var(--sans)}
+.passo p{color:var(--suave);font-size:.98rem}
+.passo .conteudo{display:flex;flex-direction:column;gap:10px;min-width:0}
+
+/* ilustração do aviso do Windows: só a forma, para a pessoa reconhecer */
+.janelinha{background:#0F4C8A;color:#fff;border-radius:6px;padding:16px 18px;max-width:420px;font:400 .86rem/1.45 "Segoe UI",var(--sans);display:flex;flex-direction:column;gap:8px}
+.janelinha strong{font-size:1.15rem;font-weight:600}
+.janelinha .link{text-decoration:underline;font-weight:600}
+.janelinha .linha-botoes{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.janelinha .b{border:1px solid rgba(255,255,255,.7);padding:5px 12px;border-radius:3px;font-size:.8rem}
+.janelinha .b.alvo{background:#fff;color:#0F4C8A;font-weight:600;box-shadow:0 0 0 3px var(--aviso)}
+.janelinha .marcado{outline:3px solid var(--aviso);outline-offset:2px;border-radius:2px}
+.legenda{font:500 .72rem/1.4 var(--mono);color:var(--fraco)}
+
+.grade2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cartao{background:var(--painel);border:1px solid var(--linha);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.cartao h3{margin:0;font:600 1.02rem var(--sans)}
+.cartao p{color:var(--suave);font-size:.95rem}
+footer{border-top:1px solid var(--linha);padding-top:18px;color:var(--fraco);font-size:.85rem;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:640px){.grade2{grid-template-columns:1fr} .passo{grid-template-columns:1fr} main{gap:48px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.texto{display:flex;flex-direction:column;gap:14px;max-width:68ch}
+.texto h2{font-size:1.35rem;margin-top:14px}
+.texto ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;color:var(--suave)}
+.texto p{color:var(--suave)}
+.texto strong{color:var(--tinta)}
+</style>
+</head>
+<body>
+<main>
+  <div class="topo">
+    <a class="marca" href="index.html" style="text-decoration:none;color:var(--tinta)">ESQUEC<span>AI</span></a>
+    <span class="selo-beta">BETA</span>
+  </div>
+  <article class="texto">
+    <span class="rotulo">Política de privacidade · versão de teste · 06/10/2026</span>
+    <h1 style="font-size:clamp(2rem,6vw,2.8rem)">O que o EsquecAI guarda, e para quê</h1>
+    <p>Em poucas palavras: o app guarda o que você põe nele, para funcionar em mais de um computador e com a sua equipe. Nada é vendido, nada é usado para propaganda, e o app não tem rastreadores.</p>
+
+    <h2>O que fica guardado</h2>
+    <ul>
+      <li><strong>Sua conta:</strong> nome e e-mail.</li>
+      <li><strong>O seu trabalho:</strong> tarefas, recorrentes, contas lidas, procedimentos, textos prontos, cálculos e preferências.</li>
+      <li><strong>Arquivos que você anexa</strong> às tarefas (PDFs e prints).</li>
+      <li><strong>Equipe, se você participar de uma:</strong> as tarefas da equipe, as mensagens do chat, se você está online (dá para desligar em Configurações) e o resumo do dia que alimenta o relatório do gestor. O que é só seu continua só seu, conforme a privacidade que você escolhe em cada tarefa.</li>
+      <li><strong>Senhas em Acessos:</strong> são cifradas no seu computador, com a sua senha mestra, antes de sair dele. Na nuvem fica só o conteúdo cifrado, que ninguém além de você consegue ler.</li>
+      <li><strong>Cópias de segurança</strong> dos seus dados, para recuperar se algo der errado.</li>
+    </ul>
+
+    <h2>Onde fica</h2>
+    <p>Na nuvem do Google (Firebase), que guarda e sincroniza os dados, e no seu próprio computador. Para saber se existe versão nova, o app consulta o GitHub, onde fica o instalador.</p>
+
+    <h2>Inteligência artificial</h2>
+    <p>Quando você usa a janela de IA do app, você entra na sua própria conta do serviço escolhido. O que você escreve lá vai direto para esse serviço e segue as regras dele, não as do EsquecAI.</p>
+
+    <h2>O que não fazemos</h2>
+    <ul>
+      <li>Não vendemos nem emprestamos os seus dados.</li>
+      <li>Não usamos os seus dados para propaganda.</li>
+      <li>Não colocamos rastreador nem ferramenta de estatística de uso no app.</li>
+    </ul>
+
+    <h2>Seus direitos</h2>
+    <p>Pela Lei Geral de Proteção de Dados (LGPD), você pode pedir para ver, corrigir ou apagar os seus dados. Durante o teste, faça o pedido para quem te convidou.</p>
+  </article>
+  <footer>
+    <span>EsquecAI · versão de teste para convidados</span>
+    <a href="index.html">Voltar ao download</a>
+  </footer>
+</main>
+</body>
+</html>
