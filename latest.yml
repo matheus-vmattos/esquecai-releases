@@ -1,8 +1,8 @@
-version: 0.99.49
+version: 0.99.50
 files:
-  - url: https://github.com/matheus-vmattos/esquecai-releases/releases/download/v0.99.49/esquecai-0.99.49-setup.exe
-    sha512: pXxrtXPVgcMnELwWGRiawBPye8+Fbcc3YI+lVBOUhYXpB7HZ8iWauBuqi3HhvcOHm+RwxgNr4YncyOiDLb9F5Q==
-    size: 130059216
-path: https://github.com/matheus-vmattos/esquecai-releases/releases/download/v0.99.49/esquecai-0.99.49-setup.exe
-sha512: pXxrtXPVgcMnELwWGRiawBPye8+Fbcc3YI+lVBOUhYXpB7HZ8iWauBuqi3HhvcOHm+RwxgNr4YncyOiDLb9F5Q==
-releaseDate: '2026-10-20T11:55:48.908Z'
+  - url: https://github.com/matheus-vmattos/esquecai-releases/releases/download/v0.99.50/esquecai-0.99.50-setup.exe
+    sha512: FD3Lk1R2ZXXo8S2cR3W+TXKIg9l5pF3af/w1h0pewzxsXir4zG7DpJinpwlmEHSjx+CGy4t8ivIYAV/GKWtwtg==
+    size: 130060263
+path: https://github.com/matheus-vmattos/esquecai-releases/releases/download/v0.99.50/esquecai-0.99.50-setup.exe
+sha512: FD3Lk1R2ZXXo8S2cR3W+TXKIg9l5pF3af/w1h0pewzxsXir4zG7DpJinpwlmEHSjx+CGy4t8ivIYAV/GKWtwtg==
+releaseDate: '2026-10-20T16:12:45.970Z'
