@@ -1,4 +1,5 @@
 name: Publish EsquecAI 0.99.75
+# nova execução: a anterior parou num erro interno do GitHub (09/11)
 on:
   push:
     branches: [main]
