@@ -1,5 +1,4 @@
 name: Publish EsquecAI 0.99.75
-# nova execução: a anterior parou num erro interno do GitHub (09/11)
 on:
   push:
     branches: [main]
@@ -16,9 +15,9 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       VERSION: '0.99.75'
       SOURCE_REPO: 'matheus-vmattos/esquecAI'
-      SOURCE_SHA: 'c522e1127edd19ce35765e1387dadc515777e0ff'
-      CANDIDATE_RELEASE: '439478428'
-      TAR_SHA256: '2239fe12159f7dc4c550e959f44c27f15b01db5f83fecc9cc0fcd4ebf5c4806b'
+      SOURCE_SHA: 'a763dcf9cffbad0dfbe687ea8b40a351545c1cab'
+      CANDIDATE_RELEASE: '439534111'
+      TAR_SHA256: '0ca05789a4ddaac3540b4539056a0e0fc0bdc901aae10b05d4eeffe1e253a94a'
     steps:
       - uses: actions/checkout@v4
       - name: Reassemble validated Windows package
@@ -76,7 +75,7 @@ jobs:
             echo 'Release already exists; refusing to overwrite assets' >&2
             exit 1
           fi
-          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title "EsquecAI $VERSION" --notes "Clicar no link de uma tarefa já começa a tarefa. Calculadora: a janelinha mostra a mesma fita aberta no app e nunca mais apaga o que você fez nele; o teclado numérico leva da descrição para a próxima linha; Backspace depois do \"=\" reabre a conta; fitas com nome \"Cálculo 1, 2…\" e as vazias somem sozinhas. Relatório mais claro: conta que passa de um mês para o outro não aparece duas vezes, mostra o que foi feito depois do prazo, diz \"folga\" nas férias e lista as tarefas adiadas 3 vezes ou mais. PDFs com um botão Abrir só. Código-fonte: matheus-vmattos/esquecAI@c522e11."
+          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title "EsquecAI $VERSION" --notes "Clicar no link de uma tarefa já começa a tarefa. Calculadora: a janelinha mostra a mesma fita aberta no app e nunca mais apaga o que você fez nele; o teclado numérico leva da descrição para a próxima linha; Backspace depois do \"=\" reabre a conta; fitas com nome \"Cálculo 1, 2…\" e as vazias somem sozinhas. Relatório mostra quantas vezes (o +1) você fez cada diária, como atendimentos e tickets; conta que passa de um mês para o outro não aparece duas vezes, mostra o que foi feito depois do prazo, diz \"folga\" nas férias e lista as tarefas adiadas 3 vezes ou mais. PDFs com um botão Abrir só. Código-fonte: matheus-vmattos/esquecAI@a763dcf."
           # cópia com nome fixo: o botão da página do beta aponta sempre para
           # releases/latest/download/EsquecAI-Setup.exe
           cp "package/esquecai-$VERSION-setup.exe" package/EsquecAI-Setup.exe
